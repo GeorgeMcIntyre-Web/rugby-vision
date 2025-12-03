@@ -1,5 +1,63 @@
 # Rugby Vision - Mega Prompt for Multi-Agent Development
 
+## 📖 How to Use This Document
+
+**Workflow**: 
+1. Your human will tell you which **agent type** or **specific task** you are assigned
+2. Use the Quick Navigation section below to jump to your assigned section
+3. Read your task details, specifications, and requirements
+4. Review the Coding Standards section (CRITICAL - must follow)
+5. Implement your assigned work following the specifications
+6. Write tests as required
+7. Follow the Git Workflow to commit your changes
+
+**Example**: If you're told "You are a Backend Agent working on Phase 7", jump to [Phase 7: Backend API](#-phase-7-backend-api-and-pipeline-glue) and follow those instructions.
+
+---
+
+## 🚀 Quick Navigation for Agents
+
+**How to use this document**: Your human will tell you which agent type/task you are. Use the links below to jump directly to your section.
+
+### Agent Type Quick Links
+
+**Backend/ML Agents** (Phases 6-7):
+- [Phase 6: Decision Engine](#-phase-6-forward-pass-decision-engine) - Start here for Phase 6
+- [Phase 7: Backend API](#-phase-7-backend-api-and-pipeline-glue) - Start here for Phase 7
+- [Quick Start: Backend/ML](#-quick-start-for-agents)
+
+**Frontend Agents** (Phase 8):
+- [Phase 8: Frontend UI](#-phase-8-frontend-ui-for-referees-and-analysts) - Start here
+- [Quick Start: Frontend](#-quick-start-for-agents)
+
+**Testing Agents** (Phase 9):
+- [Phase 9: Testing Strategy](#-phase-9-testing-strategy) - Start here
+- [Quick Start: Testing](#-quick-start-for-agents)
+
+**DevOps Agents** (Phase 10):
+- [Phase 10: CI/CD](#-phase-10-cicd-and-deployment-pipeline) - Start here
+
+**ML/Data Agents** (Phase 11):
+- [Phase 11: Datasets and Training](#-phase-11-datasets-labeling-and-model-training-parallel) - Start here
+
+**Performance Agents** (Phase 12):
+- [Phase 12: Performance Optimization](#-phase-12-performance-optimization) - Start here
+
+**Documentation Agents** (Phase 13):
+- [Phase 13: Documentation and Demo](#-phase-13-documentation-and-demo) - Start here
+
+### Task-Specific Quick Links
+
+**Phase 6 Tasks**:
+- [Task 6.1: Decision Criteria](#task-61-decision-criteria-definition) - Physics/ML Agent
+- [Task 6.2: Pass Event Detection](#task-62-pass-event-detection) - ML/CV Agent
+- [Task 6.3: Ball Trajectory Analysis](#task-63-ball-trajectory-analysis) - ML/CV Agent
+- [Task 6.4: Decision Logic](#task-64-decision-logic-implementation) - Core ML Agent
+- [Task 6.5: Confidence Scoring](#task-65-confidence-scoring) - ML Agent
+- [Task 6.6: Testing](#task-66-testing-and-validation) - Testing Agent
+
+---
+
 ## 🎯 Project Overview
 
 **Rugby Vision** is a multi-camera 3D forward pass detection system for rugby officials. The system processes synchronized video from multiple camera angles to reconstruct 3D positions of players and the ball, then determines whether a pass is forward according to rugby laws.
