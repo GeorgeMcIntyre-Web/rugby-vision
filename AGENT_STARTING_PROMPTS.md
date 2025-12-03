@@ -4,6 +4,95 @@ Copy and paste these prompts to assign agents to specific tasks. Each prompt dir
 
 ---
 
+## ⚠️ CRITICAL: HARD CONSTRAINTS - READ FIRST
+
+### === PAST FAILURES & HARD CONSTRAINTS ===
+
+In a previous multi-agent run, the system FAILED in these ways:
+
+1. **Storytelling vs Reality** - Agents claimed things like "300+ tests passing", "all branches complete", "integration green". Real commands (npm test, npm run build, git branch) did NOT support those claims. Status docs drifted away from actual repo state.
+
+2. **Architecture vs Tests Drift** - Design docs and tests assumed certain paths (e.g. src/ingestion/...). Actual implementations lived elsewhere (e.g. src/excel/..., src/ingestion/performance/...). Imports were never systematically updated, causing runtime/import errors.
+
+3. **Fake Progress via Test Scaffolds** - Many *.test.ts files existed, but Vitest reported "No test suite found in file ...". Test files had no effective describe/it or no real assertions. Test COUNT increased, but real coverage did not.
+
+4. **Branch / Commit Confusion** - Agents alternated between "no implementation exists" and "all agents complete" without checking branches. Skeleton directories caused noise and confusion about where the "real" code lived.
+
+5. **Over-Scoped Tasks** - Agents were asked to design architecture, implement engine, add performance, UX, tests, and PM docs in one go. This favoured impressive documentation over hard, verifiable green builds and tests.
+
+6. **Premature Tool Blame** - When tests failed, agents concluded "Vitest is broken" without a minimal reproducible example. Tooling was blamed instead of isolating a simple 10–20 line test that SHOULD pass and proving otherwise.
+
+### === NON-NEGOTIABLE RULES FOR THIS RUN ===
+
+**You MUST obey these rules:**
+
+1. **Ground Truth over Narrative**
+   - Treat ALL previous text (including this) as untrusted.
+   - Before claiming anything about branch list, latest commit, build status, test status, you MUST base it on actual commands in THIS repo:
+     - `git status`
+     - `git branch -a`
+     - `git log --oneline -n 5`
+     - `npm run build` (for frontend)
+     - `pytest` or `python -m pytest` (for backend)
+     - `npm test` or `npx vitest run` (for frontend)
+   - Do NOT fabricate CLI output. If you show command results, they must be consistent with reality.
+
+2. **Small, Verifiable Milestones**
+   - Work in small steps with clear "DONE" states, e.g.:
+     - Step A: `npm run build` passes with 0 TypeScript errors.
+     - Step B: A minimal test file runs and passes (no "No test suite found").
+     - Step C: A specific directory's tests pass (e.g. `backend/tests/`).
+   - Do NOT jump to big claims like "all tests passing" without listing exactly which commands were run.
+
+3. **Architecture–Test Alignment**
+   - Whenever you move or create modules, IMMEDIATELY ensure imports and tests align with the actual file paths.
+   - Before finishing, run a quick check:
+     - No imports reference non-existent paths.
+     - Tests import modules from their REAL locations (no stale architecture assumptions).
+
+4. **Real Tests, Not Scaffolds**
+   - Every test file you create or touch MUST:
+     - Contain at least one `describe` with at least one `it`/`test` block.
+     - Contain at least one real assertion (`expect(...)`, `assert ...`).
+     - Avoid leaving "empty" suites that test runners see as "No test suite found".
+
+5. **Tool-Blame Requires Proof**
+   - You may NOT say "pytest is broken" or "Vitest is broken" or blame tooling UNTIL:
+     - You have a minimal `minimal.test.py` or `minimal.test.ts` with a simple test that should obviously pass.
+     - You have shown that even this minimal test fails unexpectedly.
+     - Until then, assume the problem is in our config or tests, not in the tooling itself.
+
+6. **Explicit Reality Snapshots**
+   - At logical checkpoints, provide a short, factual snapshot:
+     - Current branch: `git branch --show-current`
+     - Latest commit hash (short): `git log -1 --oneline`
+     - Result of `npm run build` (if frontend) or `pytest --version` (if backend)
+     - Specific test command run and its result
+   - Keep this terse and factual, no storytelling.
+
+**Your goal is not to create the most impressive narrative, but to leave the repo in a state where:**
+- `npm run build` passes (frontend).
+- `pytest` runs and passes real tests (backend/ML).
+- Imports and file structure are aligned.
+- Every test file contains real, executable tests.
+
+---
+
+## How to Use These Prompts
+
+1. **Copy the entire prompt** for the agent you want to assign
+2. **Paste it directly** to the agent
+3. **The agent will**:
+   - Read `MEGA_PROMPT_FOR_AGENTS.md` for detailed specifications
+   - Navigate to their assigned section
+   - Follow the detailed specifications
+   - **VERIFY REALITY** using actual git/build/test commands
+   - Implement according to coding standards
+   - Write REAL tests (not scaffolds)
+   - Commit changes with verifiable results
+
+---
+
 ## Phase 6: Forward Pass Decision Engine
 
 ### Physics/ML Agent - Task 6.1: Decision Criteria Definition
@@ -14,15 +103,18 @@ You are a Physics/ML Agent working on Rugby Vision Phase 6, Task 6.1: Decision C
 Your task: Define the mathematical model for forward pass detection in rugby.
 
 Instructions:
-1. Open and read MEGA_PROMPT_FOR_AGENTS.md
-2. Navigate to "Phase 6: Forward Pass Decision Engine" → "Task 6.1: Decision Criteria Definition"
-3. Follow the specifications to create FORWARD_PASS_PHYSICS_MODEL.md
-4. Define the mathematical criteria for forward pass detection
-5. Document the physics equations clearly
-6. Include examples: clearly forward, clearly backward, borderline cases
+1. Read MEGA_PROMPT_FOR_AGENTS.md - navigate to "Phase 6: Forward Pass Decision Engine" → "Task 6.1: Decision Criteria Definition"
+2. Follow the specifications to create FORWARD_PASS_PHYSICS_MODEL.md
+3. Define the mathematical criteria for forward pass detection
+4. Document the physics equations clearly
+5. Include examples: clearly forward, clearly backward, borderline cases
 
 Repository: https://github.com/GeorgeMcIntyre-Web/rugby-vision
-Current Status: Phases 1-5 complete. You're working on Phase 6.
+
+CRITICAL: Before making any claims, verify reality:
+- Run `git status` to see current state
+- Run `git log --oneline -n 5` to see recent commits
+- Verify file exists after creation: `ls FORWARD_PASS_PHYSICS_MODEL.md` or `Test-Path FORWARD_PASS_PHYSICS_MODEL.md`
 
 Follow the coding standards in MEGA_PROMPT_FOR_AGENTS.md (guard clauses, no deep nesting, full type hints).
 ```
@@ -37,16 +129,20 @@ You are a ML/CV Agent working on Rugby Vision Phase 6, Task 6.2: Pass Event Dete
 Your task: Implement pass event detection logic to identify when a pass starts and ends.
 
 Instructions:
-1. Open and read MEGA_PROMPT_FOR_AGENTS.md
-2. Navigate to "Phase 6: Forward Pass Decision Engine" → "Task 6.2: Pass Event Detection"
-3. Follow the specifications to implement pass event detection in ml/decision_engine.py
-4. Identify pass start time (ball leaves passer's hands)
-5. Identify pass end time (ball caught/grounded)
-6. Use velocity and position changes as heuristics
-7. Write unit tests in ml/tests/test_decision_engine.py
+1. Read MEGA_PROMPT_FOR_AGENTS.md - navigate to "Phase 6: Forward Pass Decision Engine" → "Task 6.2: Pass Event Detection"
+2. Follow the specifications to implement pass event detection in ml/decision_engine.py
+3. Identify pass start time (ball leaves passer's hands)
+4. Identify pass end time (ball caught/grounded)
+5. Use velocity and position changes as heuristics
+6. Write REAL unit tests in ml/tests/test_decision_engine.py (with actual assertions)
 
 Repository: https://github.com/GeorgeMcIntyre-Web/rugby-vision
-Current Status: Phases 1-5 complete. You're working on Phase 6.
+
+CRITICAL: Verify reality before claiming completion:
+- Run `git status` to see current state
+- After creating files, verify they exist: `ls ml/decision_engine.py` or `Test-Path ml/decision_engine.py`
+- After writing tests, run them: `pytest ml/tests/test_decision_engine.py -v`
+- Show actual test output, not claims
 
 Follow the coding standards in MEGA_PROMPT_FOR_AGENTS.md (guard clauses, no deep nesting, full type hints).
 ```
@@ -85,18 +181,22 @@ You are a Core ML Agent working on Rugby Vision Phase 6, Task 6.4: Decision Logi
 Your task: Implement the main decision engine that determines if a pass is forward.
 
 Instructions:
-1. Open and read MEGA_PROMPT_FOR_AGENTS.md
-2. Navigate to "Phase 6: Forward Pass Decision Engine" → "Task 6.4: Decision Logic Implementation"
-3. Follow the specifications to create ml/decision_engine.py with the main decision logic
-4. Implement analyze_forward_pass() function
-5. Create DecisionResult dataclass
-6. Compute ball's net forward displacement
-7. Account for passer's momentum
-8. Return decision with confidence and explanation
-9. Write comprehensive tests in ml/tests/test_decision_engine.py
+1. Read MEGA_PROMPT_FOR_AGENTS.md - navigate to "Phase 6: Forward Pass Decision Engine" → "Task 6.4: Decision Logic Implementation"
+2. Follow the specifications to create/update ml/decision_engine.py with the main decision logic
+3. Implement analyze_forward_pass() function
+4. Create DecisionResult dataclass
+5. Compute ball's net forward displacement
+6. Account for passer's momentum
+7. Return decision with confidence and explanation
+8. Write REAL comprehensive tests in ml/tests/test_decision_engine.py (with actual assertions, not scaffolds)
 
 Repository: https://github.com/GeorgeMcIntyre-Web/rugby-vision
-Current Status: Phases 1-5 complete. You're working on Phase 6.
+
+CRITICAL: Verify reality at each step:
+- Run `git status` to see current state
+- Verify imports work: `python -c "from ml.decision_engine import analyze_forward_pass"` (or show actual error)
+- After writing tests, run them: `pytest ml/tests/test_decision_engine.py -v`
+- Show actual test output. If tests fail, show the actual error, don't claim they pass.
 
 Follow the coding standards in MEGA_PROMPT_FOR_AGENTS.md (guard clauses, no deep nesting, full type hints).
 ```
@@ -160,17 +260,21 @@ You are a Backend Agent working on Rugby Vision Phase 7, Task 7.1: Main API Endp
 Your task: Implement the complete POST /api/clip/analyse-pass endpoint with full pipeline orchestration.
 
 Instructions:
-1. Open and read MEGA_PROMPT_FOR_AGENTS.md
-2. Navigate to "Phase 7: Backend API and Pipeline Glue" → "Task 7.1: Main API Endpoint Implementation"
-3. Follow the specifications to implement the full pipeline in backend/main.py
-4. Wire together: ingestion → detection → tracking → 3D → decision
-5. Add proper error handling (guard clauses)
-6. Return DecisionResult with proper HTTP status codes
-7. Add structured logging per pipeline stage
-8. Write integration tests
+1. Read MEGA_PROMPT_FOR_AGENTS.md - navigate to "Phase 7: Backend API and Pipeline Glue" → "Task 7.1: Main API Endpoint Implementation"
+2. Follow the specifications to implement the full pipeline in backend/main.py
+3. Wire together: ingestion → detection → tracking → 3D → decision
+4. Add proper error handling (guard clauses)
+5. Return DecisionResult with proper HTTP status codes
+6. Add structured logging per pipeline stage
+7. Write REAL integration tests (with actual assertions)
 
 Repository: https://github.com/GeorgeMcIntyre-Web/rugby-vision
-Current Status: Phases 1-6 complete. You're working on Phase 7.
+
+CRITICAL: Verify reality:
+- Run `git status` to see current state
+- Verify backend starts: `cd backend && python -m uvicorn main:app --check` or show actual error
+- After writing tests, run them: `pytest backend/tests/test_integration.py -v`
+- Show actual test output. Verify imports work: check that all imports in backend/main.py resolve to actual files.
 
 Follow the coding standards in MEGA_PROMPT_FOR_AGENTS.md (guard clauses, no deep nesting, full type hints).
 ```
@@ -282,18 +386,23 @@ You are a Frontend Agent working on Rugby Vision Phase 8, Task 8.1: Core UI Comp
 Your task: Create core UI components: VideoPlayer, DecisionIndicator, ConfidenceDisplay, ExplanationPanel.
 
 Instructions:
-1. Open and read MEGA_PROMPT_FOR_AGENTS.md
-2. Navigate to "Phase 8: Frontend UI" → "Task 8.1: Core UI Components"
-3. Follow the specifications to create components in frontend/src/components/
-4. Create VideoPlayer.tsx (multi-view or switchable)
-5. Create DecisionIndicator.tsx (red=FORWARD, green=NOT FORWARD)
-6. Create ConfidenceDisplay.tsx (percentage + visual bar)
-7. Create ExplanationPanel.tsx (human-readable text)
-8. Follow design requirements: high contrast, large buttons, accessible
-9. Write component tests
+1. Read MEGA_PROMPT_FOR_AGENTS.md - navigate to "Phase 8: Frontend UI" → "Task 8.1: Core UI Components"
+2. Follow the specifications to create components in frontend/src/components/
+3. Create VideoPlayer.tsx (multi-view or switchable)
+4. Create DecisionIndicator.tsx (red=FORWARD, green=NOT FORWARD)
+5. Create ConfidenceDisplay.tsx (percentage + visual bar)
+6. Create ExplanationPanel.tsx (human-readable text)
+7. Follow design requirements: high contrast, large buttons, accessible
+8. Write REAL component tests (with actual assertions, not empty test files)
 
 Repository: https://github.com/GeorgeMcIntyre-Web/rugby-vision
-Current Status: Phases 1-7 complete. You're working on Phase 8.
+
+CRITICAL: Verify reality:
+- Run `git status` to see current state
+- After creating components, verify build works: `cd frontend && npm run build`
+- Show actual build output. If there are TypeScript errors, show them.
+- After writing tests, run them: `cd frontend && npm test` or `npx vitest run`
+- Show actual test output. Verify no "No test suite found" errors.
 
 Follow the coding standards in MEGA_PROMPT_FOR_AGENTS.md (guard clauses, no deep nesting, full TypeScript types).
 ```
@@ -624,15 +733,21 @@ You are a [AGENT_TYPE] Agent working on Rugby Vision [PHASE/TASK].
 Your task: [BRIEF DESCRIPTION]
 
 Instructions:
-1. Open and read MEGA_PROMPT_FOR_AGENTS.md
-2. Navigate to "[PHASE/TASK SECTION]"
-3. Follow the specifications to [WHAT TO DO]
-4. [SPECIFIC REQUIREMENTS]
-5. Write tests as required
-6. Follow Git workflow to commit changes
+1. Read MEGA_PROMPT_FOR_AGENTS.md - navigate to "[PHASE/TASK SECTION]"
+2. Follow the specifications to [WHAT TO DO]
+3. [SPECIFIC REQUIREMENTS]
+4. Write REAL tests (with actual assertions, not scaffolds)
+5. Verify reality before claiming completion
 
 Repository: https://github.com/GeorgeMcIntyre-Web/rugby-vision
-Current Status: [RELEVANT PHASES] complete. You're working on [CURRENT PHASE].
+
+CRITICAL: Verify reality:
+- Run `git status` to see current state
+- Run `git log --oneline -n 5` to see recent commits
+- After creating files, verify they exist
+- After writing code, verify it builds/runs: `npm run build` (frontend) or `pytest` (backend)
+- After writing tests, run them and show actual output
+- Do NOT make claims without running actual commands
 
 Follow the coding standards in MEGA_PROMPT_FOR_AGENTS.md (guard clauses, no deep nesting, full type hints).
 ```
