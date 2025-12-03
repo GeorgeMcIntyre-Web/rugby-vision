@@ -1,0 +1,58 @@
+{
+  "_comment": "Synthetic camera calibration for Rugby Vision demo",
+  "_description": "This file contains calibration parameters for 3 cameras positioned around a rugby field. These are synthetic values for demonstration purposes.",
+  "cameras": {
+    "cam_0": {
+      "description": "Main camera - positioned at midfield touchline, elevated 10m, looking across field",
+      "intrinsic": [
+        [1500.0, 0.0, 960.0],
+        [0.0, 1500.0, 540.0],
+        [0.0, 0.0, 1.0]
+      ],
+      "extrinsic": [
+        [0.0, -1.0, 0.0, 0.0],
+        [0.866, 0.0, -0.5, 50.0],
+        [0.5, 0.0, 0.866, 10.0],
+        [0.0, 0.0, 0.0, 1.0]
+      ],
+      "image_size": [1920, 1080]
+    },
+    "cam_1": {
+      "description": "Left camera - positioned at corner, elevated 12m, angled view",
+      "intrinsic": [
+        [1400.0, 0.0, 960.0],
+        [0.0, 1400.0, 540.0],
+        [0.0, 0.0, 1.0]
+      ],
+      "extrinsic": [
+        [0.707, -0.707, 0.0, -10.0],
+        [0.612, 0.612, -0.5, 25.0],
+        [0.354, 0.354, 0.866, 12.0],
+        [0.0, 0.0, 0.0, 1.0]
+      ],
+      "image_size": [1920, 1080]
+    },
+    "cam_2": {
+      "description": "Right camera - positioned at opposite corner, elevated 12m",
+      "intrinsic": [
+        [1450.0, 0.0, 960.0],
+        [0.0, 1450.0, 540.0],
+        [0.0, 0.0, 1.0]
+      ],
+      "extrinsic": [
+        [-0.707, -0.707, 0.0, 80.0],
+        [0.612, -0.612, -0.5, 75.0],
+        [0.354, -0.354, 0.866, 12.0],
+        [0.0, 0.0, 0.0, 1.0]
+      ],
+      "image_size": [1920, 1080]
+    }
+  },
+  "field_reference": {
+    "description": "World coordinate system is aligned with rugby field",
+    "origin": "Corner of try line (left corner when viewing from center)",
+    "x_axis": "Along touchline (0 to 70m)",
+    "y_axis": "Along field length (0 to 100m)",
+    "z_axis": "Vertical, upward (0 = ground level)"
+  }
+}

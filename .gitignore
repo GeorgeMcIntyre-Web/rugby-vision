@@ -1,0 +1,206 @@
+# Rugby Vision .gitignore
+
+# ====================
+# Python
+# ====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# pytest
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ====================
+# Node.js / React
+# ====================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+dist-ssr/
+*.local
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+coverage/
+
+# ====================
+# ML / Data
+# ====================
+*.h5
+*.pkl
+*.pth
+*.onnx
+*.pb
+*.tflite
+*.caffemodel
+
+# Model weights
+ml/models/*.pt
+ml/models/*.pth
+ml/models/*.onnx
+ml/models/*.h5
+
+# Datasets
+data/
+datasets/
+test_data/
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# ====================
+# Docker
+# ====================
+*.log
+
+# ====================
+# OS
+# ====================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ====================
+# IDEs
+# ====================
+# JetBrains
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ====================
+# Project Specific
+# ====================
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+*.cache
+
+# Output files
+output/
+results/
+
+# Calibration data (may contain sensitive info)
+# Uncomment if you don't want to commit calibration files
+# ml/calibration_data/
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.crt
+
+# Database files (if any)
+*.db
+*.sqlite
+*.sqlite3
+
+# External service outputs
+.external_service_outputs/
+
+# Generated documentation
+docs/_build/
+site/
+
+# Backup files
+*.bak
+*.backup
+*~
